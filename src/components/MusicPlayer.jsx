@@ -47,10 +47,11 @@ export default function MusicPlayer() {
       setIsPlaying(false)
     }
   }, [isPlaying])
+  
 
   return (
     <>
-      <audio ref={audioRef} src={musicTrack.src} preload="metadata" />
+      <audio ref={audioRef}  src={musicTrack.src} preload="metadata" autoplay loop/>
 
       <div className="music-player">
         <AnimatePresence>

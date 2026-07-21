@@ -30,8 +30,9 @@ function TimeBlock({ value, label }) {
   )
 }
 
-export default function Countdown({ targetDate }) {
+export default function Countdown({ targetDate, variant = 'default' }) {
   const [time, setTime] = useState(() => getTimeRemaining(targetDate))
+  const isLanding = variant === 'landing'
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -40,29 +41,50 @@ export default function Countdown({ targetDate }) {
     return () => clearInterval(timer)
   }, [targetDate])
 
+  const revealProps = isLanding
+    ? {
+        initial: { opacity: 0, y: 16 },
+        animate: { opacity: 1, y: 0 },
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+      }
+
   return (
-    <section className="countdown-section" id="countdown">
+    <section
+      className={`countdown-section${isLanding ? ' landing-countdown' : ''}`}
+      id="countdown"
+    >
       <motion.div
         className="section-header"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        {...revealProps}
+        transition={{ duration: 0.6, delay: isLanding ? 0.45 : 0 }}
       >
-        <h2>Counting Down to Your Day</h2>
+        <h2>{isLanding ? 'Counting down to your day' : 'Counting Down to Your Day'}</h2>
         <p className="section-subtitle">
           {time.isPast
             ? 'Your special day has arrived! 🎉'
-            : 'Every second brings us closer to celebrating you'}
+            : isLanding
+              ? 'Every second brings us closer'
+              : 'Every second brings us closer to celebrating you'}
         </p>
       </motion.div>
 
       <motion.div
         className="countdown-grid"
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.2 }}
+        {...(isLanding
+          ? {
+              initial: { opacity: 0, scale: 0.95 },
+              animate: { opacity: 1, scale: 1 },
+            }
+          : {
+              initial: { opacity: 0, scale: 0.95 },
+              whileInView: { opacity: 1, scale: 1 },
+              viewport: { once: true },
+            })}
+        transition={{ duration: 0.7, delay: isLanding ? 0.55 : 0.2 }}
       >
         <TimeBlock value={time.days} label="Days" />
         <span className="countdown-separator">:</span>
@@ -75,10 +97,14 @@ export default function Countdown({ targetDate }) {
 
       <motion.p
         className="countdown-date"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
+        {...(isLanding
+          ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
+          : {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+            })}
+        transition={{ delay: isLanding ? 0.7 : 0.5 }}
       >
         July 29, 2026 — A day written in the stars
       </motion.p>

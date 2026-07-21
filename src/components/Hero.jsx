@@ -52,16 +52,7 @@ export default function Hero() {
           <span>July 29, 2026</span>
         </motion.div>
 
-        <motion.a
-          href="#countdown"
-          className="hero-scroll"
-          variants={item}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Countdown to your day
-          <span className="scroll-arrow">↓</span>
-        </motion.a>
+     
       </motion.div>
     </section>
   )
