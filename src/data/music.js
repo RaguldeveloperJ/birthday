@@ -1,4 +1,4 @@
-import Bsong from '../assets/music/Birthday song.mp3'
+import Bsong from '../assets/music/Birthdays song.mp3'
 
 export const musicTrack = {
   title: 'Happy Birthday Melody',
