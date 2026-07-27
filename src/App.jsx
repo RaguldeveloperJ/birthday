@@ -62,7 +62,7 @@ function App() {
 
           <footer className="footer">
             <p>Made with love for Yogashri</p>
-            <span className="footer-date">💕..Ragul..💕</span>
+            <span className="footer-date">Made by --💕..Ragul..💕</span>
           </footer>
         </motion.div>
       )}
